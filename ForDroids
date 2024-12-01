@@ -1,0 +1,43 @@
+while true do
+	wait()
+	for i,v in pairs(workspace.Room.Enemies:GetChildren()) do
+		if v:IsA("Model") and v:FindFirstChildOfClass("Humanoid") and v:FindFirstChild("Head") then
+			local high = Instance.new("Highlight")
+			local ui = Instance.new("BillboardGui")
+			local text = Instance.new("TextLabel")
+			high.Name = "localesp"
+			ui.Name = "localhealth"
+			if not v:FindFirstChild("localesp") then
+				high.FillTransparency = 1
+				high.Parent = v
+				high.OutlineTransparency = 0.2
+			end
+			if not v:FindFirstChild("localhealth") then
+				ui.Size = UDim2.new(0,200,0,50)
+				text.Size = UDim2.new(0,200,0,50)
+				ui.ExtentsOffsetWorldSpace = Vector3.new(0,1.5,0)
+				ui.AlwaysOnTop = true
+				text.BackgroundTransparency = 1
+				text.TextColor3 = Color3.fromRGB(255, 255, 255)
+				text.FontFace = Font.fromName("PressStart2P")
+				text.TextSize = 10
+				ui.Parent = v
+				text.Parent = ui
+				game:GetService("RunService").RenderStepped:Connect(function()
+                    local num = string.format("%.1f", v.Humanoid.Health)
+					text.Text = v.Name.. ":".. "Health:".. num
+					if num >= v.Humanoid.MaxHealth / 1.6 then
+						text.TextColor3 = Color3.fromRGB(0, 170, 0)
+						high.OutlineColor = Color3.fromRGB(0, 170, 0)
+					elseif num <= v.Humanoid.MaxHealth / 1.6 and num > v.Humanoid.MaxHealth / 5 then
+						high.OutlineColor = Color3.fromRGB(255, 170, 0)
+						text.TextColor3 = Color3.fromRGB(255, 170, 0)
+					elseif num <= v.Humanoid.MaxHealth / 5 then
+						text.TextColor3 = Color3.fromRGB(165, 0, 0)
+						high.OutlineColor = Color3.fromRGB(165, 0, 0)
+					end
+				end)
+			end
+		end
+	end
+end
