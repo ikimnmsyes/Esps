@@ -1,6 +1,6 @@
 while true do
 	wait()
-	for i,v in pairs(workspace.Room.Enemies:GetChildren()) do
+	for i,v in pairs(workspace.npc.npcs:GetChildren()) do
 		if v:IsA("Model") and v:FindFirstChildOfClass("Humanoid") and v:FindFirstChild("Head") then
 			local high = Instance.new("Highlight")
 			local ui = Instance.new("BillboardGui")
@@ -24,7 +24,7 @@ while true do
 				ui.Parent = v
 				text.Parent = ui
 				game:GetService("RunService").RenderStepped:Connect(function()
-                    local num = string.format("%.1f", v.Humanoid.Health)
+                    local num = v.Humanoid.Health
 					text.Text = v.Name.. ":".. "Health:".. num
 					if num >= v.Humanoid.MaxHealth / 1.6 then
 						text.TextColor3 = Color3.fromRGB(0, 170, 0)
